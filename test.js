@@ -7,18 +7,27 @@
 
 'use strict';
 
-var assert = require('assert');
 var should = require('should');
 var commands = require('./');
 
-describe('commands', function () {
-  it('should equal', function () {
-    commands({a: 'b'}).should.eql({a: 'b'});
-    commands('abc').should.equal('abc');
+describe('commandments', function () {
+  it('should parse arguments in line comments', function () {
+    commands(['abc'], '// abc: a b c').should.have.property('abc', {'_': ['a', 'b', 'c']});
   });
 
-  it('should have property.', function () {
-    commands({a: 'b'}).should.have.property('a', 'b');
+  it('should parse arguments in block comments', function () {
+    commands(['xyz'], '/* xyz: a b c */').should.have.property('xyz', {'_': ['a', 'b', 'c']});
+  });
+
+  it('should only parse arguments with matching keywords', function () {
+    var str = '/* abc: a b c */\n/* xyz: a b c */'
+    commands(['xyz'], str).should.have.property('xyz', {'_': ['a', 'b', 'c']});
+  });
+
+  it('should parse arguments when multiple comments have matching keywords:', function () {
+    var str = '/* abc: a b c */\n/* xyz: x y z */';
+    commands(['abc', 'xyz'], str).should.have.property('abc', {'_': ['a', 'b', 'c']});
+    commands(['abc', 'xyz'], str).should.have.property('xyz', {'_': ['x', 'y', 'z']});
   });
 });
 

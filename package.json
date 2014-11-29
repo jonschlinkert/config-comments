@@ -1,7 +1,7 @@
 {
   "name": "commandments",
   "description": "Parse argument commands/options from code comments using esprima and minimist.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/jonschlinkert/commandments",
   "author": {
     "name": "Jon Schlinkert",

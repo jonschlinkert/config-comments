@@ -1,6 +1,6 @@
 {
   "name": "commandments",
-  "description": "Parse arguments from code comments using esprima and minimist.",
+  "description": "Parse argument commands/options from code comments using esprima and minimist.",
   "version": "0.1.0",
   "homepage": "https://github.com/jonschlinkert/commandments",
   "author": {
@@ -25,13 +25,33 @@
   "scripts": {
     "test": "mocha -R spec"
   },
-  "devDependencies": {
-    "mocha": "*",
-    "should": "*"
-  },
-  "keywords": [],
   "dependencies": {
     "esprima-extract-comments": "^0.1.2",
     "minimist": "^1.1.0"
-  }
+  },
+  "devDependencies": {
+    "helper-reflinks": "^0.1.1",
+    "mocha": "*",
+    "should": "*"
+  },
+  "keywords": [
+    "args",
+    "argument",
+    "arguments",
+    "argv",
+    "code",
+    "command",
+    "commands",
+    "comment",
+    "comments",
+    "esprima",
+    "getopt",
+    "minimist",
+    "opt",
+    "optimist",
+    "option",
+    "options",
+    "parse",
+    "parser"
+  ]
 }

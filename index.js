@@ -1,29 +1,9 @@
 'use strict';
 
-var extend = require('extend-shallow');
+var extract = require('esprima-extract-comments');
 var minimist = require('minimist');
-var re = /(?:^|\s)(?:\/\*(?!\*?\/)([\s\S]+?)\*\/)/;
 
-function extract(str) {
-  str = str.replace(/\r/, '');
-  var matches = [];
-  var match;
-
-  while (match = re.exec(str)) {
-    var comment = match[1];
-    if (comment) {
-      comment = comment.trim();
-      if (comment[0] !== '!') {
-        matches.push(comment.replace(/\*\s*/, ''));
-      }
-    }
-    str = str.replace(match[0], '');
-  }
-
-  return matches;
-}
-
-module.exports = function comments(keywords, str) {
+module.exports = function commendments(keywords, str) {
   var o = {missing: [], omit: []};
 
   keywords = !Array.isArray(keywords)
@@ -31,22 +11,25 @@ module.exports = function comments(keywords, str) {
     : keywords
 
   var id = keywords.join('|');
-  var re = new RegExp('\\s*(?:' + id + '):([\\s\\S]+)');
+  var re = new RegExp('\\s*(?:' + id + '):([^\\*]+)');
   if (!str) {
     return [];
   }
 
+  var comments = extract.fromString(str);
   var commands = {};
 
-  keywords.forEach(function(key) {
-    extract(str).forEach(function(comment) {
-      if(new RegExp('^' + key).test(comment)) {
+  keywords.forEach(function(keyword) {
+    comments.forEach(function(ele) {
+      var comment = ele.value.trim();
+
+      if(new RegExp('^' + keyword).test(comment)) {
         var match = re.exec(comment);
         if (match != null) {
-          commands[key] = minimist(match[1].trim().split(' '));
+          commands[keyword] = minimist(match[1].trim().split(' '));
         }
       }
-    });
+    })
   });
 
   return commands;

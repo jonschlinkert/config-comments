@@ -1,6 +1,6 @@
 {
   "name": "commandments",
-  "description": "Parse arguments from code comments using minimist.",
+  "description": "Parse arguments from code comments using esprima and minimist.",
   "version": "0.1.0",
   "homepage": "https://github.com/jonschlinkert/commandments",
   "author": {
@@ -29,9 +29,9 @@
     "mocha": "*",
     "should": "*"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "dependencies": {
+    "esprima-extract-comments": "^0.1.2",
     "minimist": "^1.1.0"
   }
 }

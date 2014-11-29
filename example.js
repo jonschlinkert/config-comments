@@ -1,9 +1,7 @@
 var fs = require('fs');
-var comments = require('./');
+var commands = require('./');
 
-function read(fp) {
-  return fs.readFileSync(fp, 'utf-8');
-}
 
-var fixture = comments(['deps', 'lint'], read('fixture.js'));
+var str = fs.readFileSync('fixtures/fixture.js', 'utf-8')
+var fixture = commands(['abc', 'xyz'], str);
 console.log(fixture)

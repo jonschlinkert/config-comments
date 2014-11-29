@@ -3,7 +3,26 @@
 var extract = require('esprima-extract-comments');
 var minimist = require('minimist');
 
-module.exports = function commandments(keywords, str) {
+/**
+ * Expose `commandments`
+ */
+
+module.exports = commandments;
+
+/**
+ * Pass the `keywords` to use for identifying comments that
+ * should be parsed. A keyword must be the first thing in a comment,
+ * and a "commandments comment" should only have arguments to
+ * be parsed.
+ *
+ * @param {String|Array} `keywords` Keyword(s) to identify comments to parse.
+ * @param {String} `str` A string of valid javascript with comments to parse.
+ * @param {Object} `options` Options to pass to [minimist]
+ * @return {Object} Object of parsed arguments.
+ * @api public
+ */
+
+function commandments(keywords, str, options) {
   if (!Array.isArray(keywords) && typeof keywords !== 'string') {
     throw new TypeError('commandments expects a string or array as the first argument.');
   }
@@ -27,10 +46,10 @@ module.exports = function commandments(keywords, str) {
         var match = re.exec(comment);
         if (match) {
           match[1] = match[1].trim().replace(/\s*\*\/$/, '');
-          acc[keyword] = minimist(match[1].split(' '));
+          acc[keyword] = minimist(match[1].split(' '), options);
         }
       }
     });
     return acc;
   }, {});
-};
+}

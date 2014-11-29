@@ -16,7 +16,7 @@ module.exports = function commandments(keywords, str) {
     ? [keywords]
     : keywords
 
-  var re = new RegExp('\\s*(?:' + keywords.join('|') + '):([^\\*]+)');
+  var re = new RegExp('\\s*(?:' + keywords.join('|') + '):([\\s\\S]+)');
   var o = {missing: [], omit: []};
 
   return keywords.reduce(function(acc, keyword) {
@@ -26,7 +26,8 @@ module.exports = function commandments(keywords, str) {
       if(new RegExp('^' + keyword).test(comment)) {
         var match = re.exec(comment);
         if (match) {
-          acc[keyword] = minimist(match[1].trim().split(' '));
+          match[1] = match[1].trim().replace(/\s*\*\/$/, '');
+          acc[keyword] = minimist(match[1].split(' '));
         }
       }
     });

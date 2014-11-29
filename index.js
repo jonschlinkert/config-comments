@@ -47,20 +47,22 @@ function commandments(keywords, str, options) {
   var re = new RegExp('\\s*(?:' + keywords.join('|') + '):([\\s\\S]+)');
   var o = {missing: [], omit: []};
 
-  return keywords.reduce(function(acc, keyword) {
-    var commands = extract.fromString(str);
+  try {
+    return keywords.reduce(function(acc, keyword) {
+      var commands = extract.fromString(str);
 
-    commands.forEach(function(ele) {
-      var comment = ele.value.trim();
+      commands.forEach(function(ele) {
+        var comment = ele.value.trim();
 
-      if(new RegExp('^' + keyword).test(comment)) {
-        var match = re.exec(comment);
-        if (match) {
-          match[1] = match[1].trim().replace(/\s*\*\/$/, '');
-          acc[keyword] = minimist(match[1].split(' '), options);
+        if(new RegExp('^' + keyword).test(comment)) {
+          var match = re.exec(comment);
+          if (match) {
+            match[1] = match[1].trim().replace(/\s*\*\/$/, '');
+            acc[keyword] = minimist(match[1].split(' '), options);
+          }
         }
-      }
-    });
-    return acc;
-  }, {});
+      });
+      return acc;
+    }, {});
+  } catch(err) {}
 }

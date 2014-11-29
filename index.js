@@ -15,6 +15,10 @@ module.exports = commandments;
  * and a "commandments comment" should only have arguments to
  * be parsed.
  *
+ * ```js
+ * commandments([keywords], str, opts={});
+ * ```
+ *
  * @param {String|Array} `keywords` Keyword(s) to identify comments to parse.
  * @param {String} `str` A string of valid javascript with comments to parse.
  * @param {Object} `options` Options to pass to [minimist]

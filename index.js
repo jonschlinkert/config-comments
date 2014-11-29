@@ -1,6 +1,7 @@
 'use strict';
 
 var extract = require('esprima-extract-comments');
+var extend = require('extend-shallow');
 var minimist = require('minimist');
 
 /**
@@ -40,6 +41,7 @@ function commandments(keywords, str, options) {
     throw new TypeError('commandments expects a string as the second argument.');
   }
 
+  options = extend({silent: true}, options);
   keywords = !Array.isArray(keywords)
     ? [keywords]
     : keywords
@@ -64,5 +66,9 @@ function commandments(keywords, str, options) {
       });
       return acc;
     }, {});
-  } catch(err) {}
+  } catch(err) {
+    if (silent === false) {
+      throw err;
+    }
+  }
 }

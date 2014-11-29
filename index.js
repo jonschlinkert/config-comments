@@ -11,9 +11,14 @@ module.exports = commandments;
 
 /**
  * Pass the `keywords` to use for identifying comments that
- * should be parsed. A keyword must be the first thing in a comment,
- * and a "commandments comment" should only have arguments to
- * be parsed.
+ * should be parsed.
+ *
+ * **Heads up!:**
+ *
+ *   - a keyword must be the first thing in a comment, and
+ *   - a "commandments comment" should only have arguments to be parsed.
+ *
+ * **Example:**
  *
  * ```js
  * commandments([keywords], str, opts={});

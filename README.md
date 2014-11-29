@@ -55,14 +55,21 @@ var args = commandments(['abc', 'xyz'], str);
 ```
 
 ## API
-### [commandments](index.js#L29)
+### [commandments](index.js#L34)
 
-Pass the `keywords` to use for identifying comments that should be parsed. A keyword must be the first thing in a comment, and a "commandments comment" should only have arguments to be parsed.
+Pass the `keywords` to use for identifying comments that should be parsed.
 
 * `keywords` **{String|Array}**: Keyword(s) to identify comments to parse.    
 * `str` **{String}**: A string of valid javascript with comments to parse.    
 * `options` **{Object}**: Options to pass to [minimist]    
 * `returns` **{Object}**: Object of parsed arguments.  
+
+**Heads up!:**
+
+  - a keyword must be the first thing in a comment, and
+  - a "commandments comment" should only have arguments to be parsed.
+
+**Example:**
 
 ```js
 commandments([keywords], str, opts={});

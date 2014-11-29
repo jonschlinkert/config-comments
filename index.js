@@ -48,7 +48,9 @@ function commandments(keywords, str, options) {
   var o = {missing: [], omit: []};
 
   return keywords.reduce(function(acc, keyword) {
-    extract.fromString(str).forEach(function(ele) {
+    var commands = extract.fromString(str);
+
+    commands.forEach(function(ele) {
       var comment = ele.value.trim();
 
       if(new RegExp('^' + keyword).test(comment)) {

@@ -44,10 +44,9 @@ function commandments(keywords, str, options) {
   options = extend({silent: true}, options);
   keywords = !Array.isArray(keywords)
     ? [keywords]
-    : keywords
+    : keywords;
 
   var re = new RegExp('\\s*(?:' + keywords.join('|') + '):([\\s\\S]+)');
-  var o = {missing: [], omit: []};
 
   try {
     return keywords.reduce(function(acc, keyword) {
@@ -67,7 +66,7 @@ function commandments(keywords, str, options) {
       return acc;
     }, {});
   } catch(err) {
-    if (silent === false) {
+    if (options.silent === false) {
       throw err;
     }
   }

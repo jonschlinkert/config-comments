@@ -16,8 +16,8 @@ module.exports = commandments;
  *
  * **Heads up!:**
  *
- *   - a keyword must be the first thing in a comment, and
- *   - a "commandments comment" should only have arguments to be parsed.
+ *   1. a keyword must be the first thing in a comment, and
+ *   2. a "commandments comment" should only have arguments to be parsed.
  *
  * **Example:**
  *
@@ -42,11 +42,8 @@ function commandments(keywords, str, options) {
   }
 
   options = extend({silent: true}, options);
-  keywords = !Array.isArray(keywords)
-    ? [keywords]
-    : keywords;
-
-  var re = new RegExp('\\s*(?:' + keywords.join('|') + '):([\\s\\S]+)');
+  keywords = !Array.isArray(keywords) ? [keywords] : keywords;
+  var re = makeRe(keywords);
 
   try {
     return keywords.reduce(function(acc, keyword) {
@@ -55,19 +52,41 @@ function commandments(keywords, str, options) {
       commands.forEach(function(ele) {
         var comment = ele.value.trim();
 
-        if(new RegExp('^' + keyword).test(comment)) {
+        if(comment.indexOf(keyword) === 0) {
           var match = re.exec(comment);
           if (match) {
             match[1] = match[1].trim().replace(/\s*\*\/$/, '');
-            acc[keyword] = minimist(match[1].split(' '), options);
+            acc[keyword] = minimist(match[1].split(/[ \t]/), options);
           }
         }
       });
       return acc;
     }, {});
+
   } catch(err) {
-    if (options.silent === false) {
-      throw err;
-    }
+    if (options.silent === false) throw err;
   }
+}
+
+/**
+ * RegExp cache
+ */
+
+var regex, cache;
+
+function makeRe(arr) {
+  var str = arr.join('|');
+  cache = cache || str;
+
+  if (cache !== str) {
+    regex = null;
+    cache = str;
+  }
+
+  if (regex instanceof RegExp) {
+    return regex;
+  }
+
+  regex = new RegExp('\\s*(?:' + str + '):([\\s\\S]*)');
+  return regex;
 }

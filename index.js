@@ -47,12 +47,12 @@ function commandments(keywords, str, options) {
 
   try {
     return keywords.reduce(function(acc, keyword) {
-      var commands = extract.fromString(str);
+      var comments = extract.fromString(str);
 
-      commands.forEach(function(ele) {
+      comments.forEach(function(ele) {
         var comment = ele.value.trim();
 
-        if(comment.indexOf(keyword) === 0) {
+        if(comment.indexOf(keyword) !== -1) {
           var match = re.exec(comment);
           if (match) {
             match[1] = match[1].trim().replace(/\s*\*\/$/, '');

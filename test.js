@@ -13,6 +13,7 @@ var commands = require('./');
 describe('commandments', function () {
   it('should parse arguments in line comments', function () {
     commands(['abc'], '// abc: a b c').should.have.property('abc', {'_': ['a', 'b', 'c']});
+    commands(['abc'], '// abc: a-b c').should.have.property('abc', {'_': ['a-b', 'c']});
   });
 
   it('should parse arguments in block comments', function () {

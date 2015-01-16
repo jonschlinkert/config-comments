@@ -9,3 +9,8 @@ test/actual
 tmp
 TODO.md
 vendor
+
+# npmignore
+.*
+test.js
+fixtures

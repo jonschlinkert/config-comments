@@ -54,7 +54,7 @@ function commandments(keywords, str, options) {
 
         if(comment.indexOf(keyword) !== -1) {
           var match = re.exec(comment);
-          if (match) {
+          if (match && /^[-\w\s:_]+$/.test(match[1])) {
             match[1] = match[1].trim().replace(/\s*\*\/$/, '');
             acc[keyword] = minimist(match[1].split(/[ \t]/), options);
           }

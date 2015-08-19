@@ -1,13 +1,7 @@
-/*!
- * commandments <https://github.com/jonschlinkert/commandments>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License
- */
-
 'use strict';
 
-var should = require('should');
+/* deps: mocha */
+require('should');
 var commands = require('./');
 
 describe('commandments', function () {
@@ -34,6 +28,11 @@ describe('commandments', function () {
     var str = '/* abc: a b c */\n/* xyz: x y z */';
     commands(['abc', 'xyz'], str).should.have.property('abc', {'_': ['a', 'b', 'c']});
     commands(['abc', 'xyz'], str).should.have.property('xyz', {'_': ['x', 'y', 'z']});
+  });
+
+  it('should not match comment strings with unsupported characters:', function () {
+    commands(['deps'], '/*   deps: [\'styles\'], */').should.eql({});
+    commands(['deps'], '//  deps: [\'styles\'],').should.eql({});
   });
 });
 

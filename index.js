@@ -1,6 +1,6 @@
 'use strict';
 
-var extract = require('esprima-extract-comments');
+var extract = require('extract-comments');
 var extend = require('extend-shallow');
 var minimist = require('minimist');
 
@@ -47,7 +47,8 @@ function commandments(keywords, str, options) {
 
   try {
     return keywords.reduce(function(acc, keyword) {
-      var comments = extract.fromString(str);
+      var comments = extract(str);
+
 
       comments.forEach(function(ele) {
         var comment = ele.value.trim();

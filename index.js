@@ -5,41 +5,13 @@ var extend = require('extend-shallow');
 var minimist = require('minimist');
 var cache = {};
 
-/**
- * Expose `commandments`
- */
-
-module.exports = commandments;
-
-/**
- * Pass the `keywords` to use for identifying comments that
- * should be parsed.
- *
- * **Heads up!:**
- *
- *   1. a keyword must be the first thing in a comment, and
- *   2. a "commandments comment" should only have arguments to be parsed.
- *
- * **Example:**
- *
- * ```js
- * commandments([keywords], str, opts={});
- * ```
- *
- * @param {String|Array} `keywords` Keyword(s) to identify comments to parse.
- * @param {String} `str` A string of valid javascript with comments to parse.
- * @param {Object} `options` Options to pass to [minimist]
- * @return {Object} Object of parsed arguments.
- * @api public
- */
-
-function commandments(keywords, str, options) {
+module.exports = function(keywords, str, options) {
   if (!Array.isArray(keywords) && typeof keywords !== 'string') {
-    throw new TypeError('commandments expects a string or array as the first argument.');
+    throw new TypeError('expected string or array as the first argument.');
   }
 
   if (typeof str !== 'string') {
-    throw new TypeError('commandments expects a string as the second argument.');
+    throw new TypeError('expected a string as the second argument.');
   }
 
   options = extend({silent: true}, options);
@@ -67,7 +39,7 @@ function commandments(keywords, str, options) {
     res[keyword] = minimist(args, options);
   }
   return res;
-}
+};
 
 function arrayify(val) {
   return val ? (Array.isArray(val) ? val : [val]) : [];

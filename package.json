@@ -52,12 +52,16 @@
   "verb": {
     "related": {
       "list": [
-        "lint-deps"
+        "lint-deps",
+        "minimist"
       ]
     },
     "plugins": [
       "gulp-format-md"
     ],
-    "layout": "default"
+    "layout": "default",
+    "reflinks": [
+      "minimist"
+    ]
   }
 }

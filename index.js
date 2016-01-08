@@ -3,6 +3,7 @@
 var extract = require('extract-comments');
 var extend = require('extend-shallow');
 var minimist = require('minimist');
+var cache = {};
 
 /**
  * Expose `commandments`
@@ -42,52 +43,46 @@ function commandments(keywords, str, options) {
   }
 
   options = extend({silent: true}, options);
-  keywords = !Array.isArray(keywords) ? [keywords] : keywords;
+  keywords = arrayify(keywords);
   var re = makeRe(keywords);
 
-  try {
-    return keywords.reduce(function(acc, keyword) {
-      var comments = extract(str);
+  var comments = extract(str);
+  var len = comments.length;
+  var idx = -1;
+  var res = {};
 
+  while (++idx < len) {
+    var comment = comments[idx];
+    var value = comment.value.trim();
 
-      comments.forEach(function(ele) {
-        var comment = ele.value.trim();
+    if (!re.test(value)) {
+      continue;
+    }
 
-        if(comment.indexOf(keyword) !== -1) {
-          var match = re.exec(comment);
-          if (match && /^[-\w\s:_]+$/.test(match[1])) {
-            match[1] = match[1].trim().replace(/\s*\*\/$/, '');
-            acc[keyword] = minimist(match[1].split(/[ \t]/), options);
-          }
-        }
-      });
-      return acc;
-    }, {});
+    var match = re.exec(value);
+    if (!match) continue;
 
-  } catch(err) {
-    if (options.silent === false) throw err;
+    var keyword = match[1];
+    var args = match[2].trim().split(/\s+/);
+    res[keyword] = minimist(args, options);
   }
+  return res;
+}
+
+function arrayify(val) {
+  return val ? (Array.isArray(val) ? val : [val]) : [];
 }
 
 /**
- * RegExp cache
+ * Create regex
  */
-
-var regex, cache;
 
 function makeRe(arr) {
   var str = arr.join('|');
-  cache = cache || str;
-
-  if (cache !== str) {
-    regex = null;
-    cache = str;
+  if (cache[str]) {
+    return cache[str];
   }
-
-  if (regex instanceof RegExp) {
-    return regex;
-  }
-
-  regex = new RegExp('\\s*(?:' + str + '):([\\s\\S]*)');
+  var regex = new RegExp('\\s*(' + str + ')\s*:([^\n]+)');
+  cache[str] = regex;
   return regex;
 }

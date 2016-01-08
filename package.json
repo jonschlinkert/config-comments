@@ -1,12 +1,12 @@
 {
-  "name": "commandments",
+  "name": "config-comments",
   "description": "Parse argument commands/options from code comments using esprima and minimist.",
   "version": "0.2.4",
-  "homepage": "https://github.com/jonschlinkert/commandments",
+  "homepage": "https://github.com/jonschlinkert/config-comments",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
-  "repository": "jonschlinkert/commandments",
+  "repository": "jonschlinkert/config-comments",
   "bugs": {
-    "url": "https://github.com/jonschlinkert/commandments/issues"
+    "url": "https://github.com/jonschlinkert/config-comments/issues"
   },
   "license": "MIT",
   "files": [
@@ -21,10 +21,11 @@
   },
   "dependencies": {
     "extend-shallow": "^2.0.1",
-    "extract-comments": "^0.8.6",
+    "extract-comments": "^0.10.1",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
+    "gulp-format-md": "^0.1.4",
     "mocha": "*",
     "should": "*"
   },

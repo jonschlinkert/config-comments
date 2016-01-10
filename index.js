@@ -14,11 +14,11 @@ module.exports = function(keywords, str, options) {
     throw new TypeError('expected a string as the second argument.');
   }
 
-  options = extend({silent: true}, options);
+  var opts = extend({silent: true}, options);
   keywords = arrayify(keywords);
   var re = makeRe(keywords);
 
-  var comments = extract(str);
+  var comments = extract(str, opts);
   var len = comments.length;
   var idx = -1;
   var res = {};
@@ -36,7 +36,7 @@ module.exports = function(keywords, str, options) {
 
     var keyword = match[1];
     var args = match[2].trim().split(/\s+/);
-    res[keyword] = minimist(args, options);
+    res[keyword] = minimist(args, opts);
   }
   return res;
 };

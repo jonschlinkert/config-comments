@@ -50,18 +50,26 @@
     "parser"
   ],
   "verb": {
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "reflinks": [
+      "minimist",
+      "verb"
+    ],
     "related": {
       "list": [
         "lint-deps",
         "minimist"
       ]
     },
-    "plugins": [
-      "gulp-format-md"
-    ],
     "layout": "default",
-    "reflinks": [
-      "minimist"
-    ]
+    "toc": false,
+    "tasks": [
+      "readme"
+    ],
+    "lint": {
+      "reflinks": true
+    }
   }
 }

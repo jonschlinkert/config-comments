@@ -51,10 +51,8 @@ function arrayify(val) {
 
 function makeRe(arr) {
   var str = arr.join('|');
-  if (cache[str]) {
-    return cache[str];
-  }
-  var regex = new RegExp('\\s*(' + str + ')\s*:([^\n]+)');
+  if (cache[str]) return cache[str];
+  var regex = new RegExp('^[ \\t]*(' + str + ')\s*:([^\n]+)');
   cache[str] = regex;
   return regex;
 }

@@ -1,7 +1,7 @@
 {
   "name": "config-comments",
   "description": "Parse argument commands/options from code comments using esprima and minimist.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "homepage": "https://github.com/jonschlinkert/config-comments",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/config-comments",
